@@ -1,0 +1,207 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>CareConnect - Doctors</title>
+    <link rel="stylesheet" href="index.css">
+</head>
+
+<body>
+    <header class="header">
+        <div class="nav-container">
+            <a href="./index.html" class="logo">
+                <div class="logo-icon">🏠</div>
+                CareConnect
+            </a>
+            <nav>
+                <ul class="nav-menu">
+                    <li><a href="./index.html#home">Home</a></li>
+                    <li><a href="./doctors.html" class="active">Doctors</a></li>
+                    <li><a href="./index.html#about">About</a></li>
+                    <li><a href="./index.html#contact">Contact</a></li>
+                </ul>
+            </nav>
+            <button class="create-account-btn">Create account</button>
+        </div>
+    </header>
+
+    <main class="main-content doctors-page">
+        <section class="doctors">
+            <div class="doctors-container">
+                <h2>Our Doctors</h2>
+                <p class="doctors-subtitle">Find and book appointments with our trusted specialists.</p>
+
+                <div class="doctor-search">
+                    <input type="text" id="doctorSearch" placeholder="Search by name or specialty...">
+                </div>
+
+                <div class="doctors-grid" id="doctorsGrid"></div>
+            </div>
+        </section>
+    </main>
+
+    <footer class="footer">
+        <div class="footer-container">
+            <div class="footer-content">
+                <div class="footer-section">
+                    <div class="logo">
+                        <div class="logo-icon">🏠</div>
+                        CareConnect
+                    </div>
+                    <p>Connects patients with doctors and services quickly.</p>
+                </div>
+                <div class="footer-section">
+                    <h3>COMPANY</h3>
+                    <a href="./index.html#home">Home</a>
+                    <a href="./index.html#about">About us</a>
+                    <a href="#delivery">Delivery</a>
+                    <a href="#privacy">Privacy policy</a>
+                </div>
+                <div class="footer-section">
+                    <h3>GET IN TOUCH</h3>
+                    <p>+0-000-000-000</p>
+                    <p>exampleav@gmail.com</p>
+                </div>
+            </div>
+            <div class="footer-bottom">
+                <p>
+                    Copyright &copy;
+                    <span id="year"></span>
+                    - All Rights Reserved.
+                </p>
+            </div>
+        </div>
+    </footer>
+
+
+    <script>
+        document.getElementById("year").textContent = new Date().getFullYear();
+        const doctors = [
+            {
+                initials: "SJ",
+                name: "Dr. Sarah Johnson",
+                specialty: "Cardiologist",
+                experience: "15 years experience",
+                availability: "Available"
+            },
+            {
+                initials: "MC",
+                name: "Dr. Michael Chen",
+                specialty: "Neurologist",
+                experience: "12 years experience",
+                availability: "Available"
+            },
+            {
+                initials: "ER",
+                name: "Dr. Emily Rodriguez",
+                specialty: "Pediatrician",
+                experience: "8 years experience",
+                availability: "Available"
+            },
+            {
+                initials: "JW",
+                name: "Dr. James Wilson",
+                specialty: "Orthopedic Surgeon",
+                experience: "20 years experience",
+                availability: "Busy"
+            },
+            {
+                initials: "AK",
+                name: "Dr. Ananya Kapoor",
+                specialty: "Dermatologist",
+                experience: "10 years experience",
+                availability: "Available"
+            },
+            {
+                initials: "RS",
+                name: "Dr. Rajesh Sharma",
+                specialty: "General Physician",
+                experience: "18 years experience",
+                availability: "Available"
+            },
+            {
+                initials: "LP",
+                name: "Dr. Laura Patel",
+                specialty: "Gynecologist",
+                experience: "14 years experience",
+                availability: "Busy"
+            },
+            {
+                initials: "OM",
+                name: "Dr. Omar Malik",
+                specialty: "ENT Specialist",
+                experience: "11 years experience",
+                availability: "Available"
+            },
+            {
+                initials: "NT",
+                name: "Dr. Neha Thakur",
+                specialty: "Psychiatrist",
+                experience: "9 years experience",
+                availability: "Available"
+            },
+            {
+                initials: "VK",
+                name: "Dr. Vivek Khanna",
+                specialty: "Oncologist",
+                experience: "16 years experience",
+                availability: "Busy"
+            },
+            {
+                initials: "SL",
+                name: "Dr. Sophia Lee",
+                specialty: "Endocrinologist",
+                experience: "13 years experience",
+                availability: "Available"
+            },
+            {
+                initials: "AM",
+                name: "Dr. Ahmed Mustafa",
+                specialty: "Pulmonologist",
+                experience: "7 years experience",
+                availability: "Available"
+            }
+        ];
+
+        const doctorsGrid = document.getElementById("doctorsGrid");
+
+        function renderDoctors(list) {
+            doctorsGrid.innerHTML = "";
+            list.forEach(doc => {
+                const card = document.createElement("div");
+                card.className = "doctor-card";
+
+                card.innerHTML = `
+          <div class="doctor-image">${doc.initials}</div>
+          <div class="doctor-info">
+            <div class="doctor-name">${doc.name}</div>
+            <div class="doctor-specialty">${doc.specialty}</div>
+            <div class="doctor-experience">${doc.experience}</div>
+            <span class="availability ${doc.availability === "Busy" ? "busy" : ""}">
+              ${doc.availability}
+            </span>
+            <button class="book-appointment-btn" ${doc.availability === "Busy" ? "disabled" : ""}>
+              Book Appointment
+            </button>
+          </div>
+        `;
+                doctorsGrid.appendChild(card);
+            });
+        }
+
+        renderDoctors(doctors);
+
+        document.getElementById("doctorSearch").addEventListener("input", function () {
+            const query = this.value.toLowerCase();
+            const filtered = doctors.filter(d =>
+                d.name.toLowerCase().includes(query) ||
+                d.specialty.toLowerCase().includes(query)
+            );
+            renderDoctors(filtered);
+        });
+    </script>
+</body>
+
+</html>
