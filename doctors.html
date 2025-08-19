@@ -75,133 +75,124 @@
         </div>
     </footer>
 
+    <div id="bookingDialog">
+        <div class="dialogContent">
+            <h2>Booking Appointment</h2>
+            <p>Doctor: <span id="bookingDoctorName"></span></p>
+            <form id="bookingDialogForm">
+                <label for="patientName">Patient Name:</label>
+                <input type="text" id="patientName" name="patientName" required>
+
+                <label for="patientEmail">Email:</label>
+                <input type="email" id="patientEmail" name="patientEmail" required>
+
+                <label for="patientPhone">Phone:</label>
+                <input type="tel" id="patientPhone" name="patientPhone" required>
+
+                <label for="patientDate">Preferred Date:</label>
+                <input type="date" id="patientDate" name="patientDate" required>
+
+                <div class="dialogActions">
+                    <button type="submit" class="submitBtn">Book</button>
+                    <button type="button" id="closeBookingDialog" class="cancelBtn">Cancel</button>
+                </div>
+            </form>
+        </div>
+    </div>
+
 
     <script>
         document.getElementById("year").textContent = new Date().getFullYear();
+
         const doctors = [
-            {
-                initials: "SJ",
-                name: "Dr. Sarah Johnson",
-                specialty: "Cardiologist",
-                experience: "15 years experience",
-                availability: "Available"
-            },
-            {
-                initials: "MC",
-                name: "Dr. Michael Chen",
-                specialty: "Neurologist",
-                experience: "12 years experience",
-                availability: "Available"
-            },
-            {
-                initials: "ER",
-                name: "Dr. Emily Rodriguez",
-                specialty: "Pediatrician",
-                experience: "8 years experience",
-                availability: "Available"
-            },
-            {
-                initials: "JW",
-                name: "Dr. James Wilson",
-                specialty: "Orthopedic Surgeon",
-                experience: "20 years experience",
-                availability: "Busy"
-            },
-            {
-                initials: "AK",
-                name: "Dr. Ananya Kapoor",
-                specialty: "Dermatologist",
-                experience: "10 years experience",
-                availability: "Available"
-            },
-            {
-                initials: "RS",
-                name: "Dr. Rajesh Sharma",
-                specialty: "General Physician",
-                experience: "18 years experience",
-                availability: "Available"
-            },
-            {
-                initials: "LP",
-                name: "Dr. Laura Patel",
-                specialty: "Gynecologist",
-                experience: "14 years experience",
-                availability: "Busy"
-            },
-            {
-                initials: "OM",
-                name: "Dr. Omar Malik",
-                specialty: "ENT Specialist",
-                experience: "11 years experience",
-                availability: "Available"
-            },
-            {
-                initials: "NT",
-                name: "Dr. Neha Thakur",
-                specialty: "Psychiatrist",
-                experience: "9 years experience",
-                availability: "Available"
-            },
-            {
-                initials: "VK",
-                name: "Dr. Vivek Khanna",
-                specialty: "Oncologist",
-                experience: "16 years experience",
-                availability: "Busy"
-            },
-            {
-                initials: "SL",
-                name: "Dr. Sophia Lee",
-                specialty: "Endocrinologist",
-                experience: "13 years experience",
-                availability: "Available"
-            },
-            {
-                initials: "AM",
-                name: "Dr. Ahmed Mustafa",
-                specialty: "Pulmonologist",
-                experience: "7 years experience",
-                availability: "Available"
-            }
+            { initials: "SJ", name: "Dr. Sarah Johnson", specialty: "Cardiologist", experience: "15 years experience", availability: "Available" },
+            { initials: "MC", name: "Dr. Michael Chen", specialty: "Neurologist", experience: "12 years experience", availability: "Available" },
+            { initials: "ER", name: "Dr. Emily Rodriguez", specialty: "Pediatrician", experience: "8 years experience", availability: "Available" },
+            { initials: "JW", name: "Dr. James Wilson", specialty: "Orthopedic Surgeon", experience: "20 years experience", availability: "Busy" },
+            { initials: "AK", name: "Dr. Ananya Kapoor", specialty: "Dermatologist", experience: "10 years experience", availability: "Available" },
+            { initials: "RS", name: "Dr. Rajesh Sharma", specialty: "General Physician", experience: "18 years experience", availability: "Available" },
+            { initials: "LP", name: "Dr. Laura Patel", specialty: "Gynecologist", experience: "14 years experience", availability: "Busy" },
+            { initials: "OM", name: "Dr. Omar Malik", specialty: "ENT Specialist", experience: "11 years experience", availability: "Available" },
+            { initials: "NT", name: "Dr. Neha Thakur", specialty: "Psychiatrist", experience: "9 years experience", availability: "Available" },
+            { initials: "VK", name: "Dr. Vivek Khanna", specialty: "Oncologist", experience: "16 years experience", availability: "Busy" },
+            { initials: "SL", name: "Dr. Sophia Lee", specialty: "Endocrinologist", experience: "13 years experience", availability: "Available" },
+            { initials: "AM", name: "Dr. Ahmed Mustafa", specialty: "Pulmonologist", experience: "7 years experience", availability: "Available" }
         ];
 
         const doctorsGrid = document.getElementById("doctorsGrid");
 
         function renderDoctors(list) {
             doctorsGrid.innerHTML = "";
+
             list.forEach(doc => {
                 const card = document.createElement("div");
                 card.className = "doctor-card";
-
                 card.innerHTML = `
-          <div class="doctor-image">${doc.initials}</div>
-          <div class="doctor-info">
-            <div class="doctor-name">${doc.name}</div>
-            <div class="doctor-specialty">${doc.specialty}</div>
-            <div class="doctor-experience">${doc.experience}</div>
-            <span class="availability ${doc.availability === "Busy" ? "busy" : ""}">
-              ${doc.availability}
-            </span>
-            <button class="book-appointment-btn" ${doc.availability === "Busy" ? "disabled" : ""}>
-              Book Appointment
-            </button>
-          </div>
-        `;
+        <div class="doctor-image">${doc.initials}</div>
+        <div class="doctor-info">
+          <div class="doctor-name">${doc.name}</div>
+          <div class="doctor-specialty">${doc.specialty}</div>
+          <div class="doctor-experience">${doc.experience}</div>
+          <span class="availability ${doc.availability === "Busy" ? "busy" : ""}">
+            ${doc.availability}
+          </span>
+          <button class="book-appointment-btn" ${doc.availability === "Busy" ? "disabled" : ""} data-doctor="${doc.name}">
+            Book Appointment
+          </button>
+        </div>
+      `;
                 doctorsGrid.appendChild(card);
+            });
+            document.querySelectorAll('.book-appointment-btn:not([disabled])').forEach(btn => {
+                btn.addEventListener('click', function () {
+                    const doctorName = this.getAttribute('data-doctor');
+                    openBookingDialog(doctorName);
+                });
             });
         }
 
-        renderDoctors(doctors);
+        function openBookingDialog(doctorName) {
+            const dialog = document.getElementById('bookingDialog');
+            const form = document.getElementById('bookingDialogForm');
+            document.getElementById('bookingDoctorName').textContent = doctorName;
+            form.reset();
+            dialog.style.display = 'flex';
+        }
 
-        document.getElementById("doctorSearch").addEventListener("input", function () {
-            const query = this.value.toLowerCase();
-            const filtered = doctors.filter(d =>
-                d.name.toLowerCase().includes(query) ||
-                d.specialty.toLowerCase().includes(query)
-            );
-            renderDoctors(filtered);
+        function closeBookingDialog() {
+            const dialog = document.getElementById('bookingDialog');
+            const form = document.getElementById('bookingDialogForm');
+
+            dialog.style.display = 'none';
+            form.reset();
+        }
+
+        document.addEventListener('DOMContentLoaded', function () {
+
+            renderDoctors(doctors);
+
+
+            document.getElementById("doctorSearch").addEventListener("input", function () {
+                const query = this.value.toLowerCase();
+                const filtered = doctors.filter(d =>
+                    d.name.toLowerCase().includes(query) ||
+                    d.specialty.toLowerCase().includes(query)
+                );
+                renderDoctors(filtered);
+            });
+
+
+            document.getElementById('bookingDialogForm').addEventListener('submit', function (e) {
+                e.preventDefault();
+
+                alert('Appointment booked successfully!');
+                closeBookingDialog();
+            });
+
+            document.getElementById('closeBookingDialog').addEventListener('click', closeBookingDialog);
         });
     </script>
+
 </body>
 
 </html>
